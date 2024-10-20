@@ -1,0 +1,26 @@
+name: "Terraform Deployment"
+on:
+  # Manual trigger
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  terraform:
+    name:  ${{ matrix.account }}
+    runs-on: [ ubuntu-latest ]
+    defaults:
+      run:
+        working-directory: accounts
+    strategy:
+      max-parallel: 2
+      matrix:
+        include:
+          - account: dev
+          - account: prod
+    steps:
+    - uses: actions/checkout@v2
+    - name: test
+      run : echo "test"
+
